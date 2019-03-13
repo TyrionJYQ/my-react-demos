@@ -1,9 +1,10 @@
 # my-react-demos
 this is demos for react starter  refer to https://gitee.com/wlhy/react-demos
 
-<script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
-<script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
-<script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+- <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+
+- <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+- <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
 
 >上面三个链接分别是React核心库；提供与DOM相关的功能；将ES6代码转化为ES5代码。
 
@@ -17,7 +18,7 @@ this is demos for react starter  refer to https://gitee.com/wlhy/react-demos
 
 首先需要在script标签中type需要声明为text/babel,用来声明这是JSX句法。
 
-React.DOM.render()接受两个参数，第一个参数是JSX编写的模板，第二个参数是模板渲染的目标节点，将被渲染成目标节点的子节点。如果目标节点(id="example")有其他节点(<h3>将被忽略</h3>)。
+React.DOM.render()接受两个参数，第一个参数是JSX编写的模板，第二个参数是模板渲染的目标节点，将被渲染成目标节点的子节点。如果目标节点(id="example")有其他节点将被忽略。
 
 ##### demo02: Use Javascript in JSX
 
@@ -34,7 +35,7 @@ arr是一个数组，该数组的每个元素是一个html标签，这个数组�
 ```javascript
 Class TemplateName extends React.Component {
   constructor() {
-  	super()
+  	super();
   }
   render() {
   	...
@@ -46,7 +47,7 @@ Class TemplateName extends React.Component {
 >
 >声明组件的类的首字母需要大写，否则会报错。
 >
->组件有自己的属性，可以通过this.props.[attribute]来获取他们。
+>组件有自己的属性，可以通过this.props[attributeName]来获取他们。
 >
 >render方法返回的JSX只有一个顶层HTML节点。如果有嵌套的节点可以使用小括号（）包括。
 
@@ -183,10 +184,13 @@ React将组件看成一个状态机，通过与用户的交互，实现不同状
 
 ```javascript
 class TemplateClassName extends React.Class {
-  super();
-  this.state = {
+  constructor() {
+    super();
+  	this.state = {
   
+ 	}
   }
+  
   handleEvent() {
   	this.setState(); //re-render
   }
@@ -195,9 +199,9 @@ class TemplateClassName extends React.Class {
 
 ##### demo09: Form
 
-React的设计理念：this.state用来描述组件的状态，通过与用户交互来改变this.state,是可变的，this.props用来描述组件不可改变的稳定的属性。
+在React中,this.state用来描述组件的状态，通过与用户交互来改变this.state,是可变的，this.setState()用来改变组件的state,而this.props用来描述组件不可改变的稳定的属性。
 
-所以：如果你在React中使用<input>, <textarea>, and <option>等表单元素，并且想对用户输入作出响应你可以使用onChange事件。
+所以：如果你在React中使用input, textarea,  option等表单元素，并且想让程序对用户的输入作出响应，你需要使用onChange事件。
 
 
 
@@ -219,7 +223,7 @@ class Input  extends React.Component {
     let {value} = this.state;
     return (
       <div>
-        <input type="text" value={value} onChange={(e) => this.handleChange(e)}></input>
+        <input type="text" value={value} onChange={e => this.handleChange(e)}></input>
       </div>
     )
   }
