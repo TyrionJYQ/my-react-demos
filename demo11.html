@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+  <script src="https://cdn.bootcss.com/prop-types/15.6.1/prop-types.js"></script>
+</head>
+
+<body>
+  <div id="example">
+
+
+  </div>
+
+</body>
+<script type="text/babel">
+let Component = React.Component;
+class Prize  extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      prize: {}
+    }
+  }
+  getPrize() {
+    setTimeout(() => 
+      this.setState({
+        prize: {'name':'一等奖', 'bonus': '$10000000000'}
+      }),
+      2000
+    )
+  }
+  componentDidMount() {
+   this.getPrize()
+  }
+  render() {
+    let prize = this.state.prize;
+    return (
+      <div>
+        <span>中奖情况:</span>
+        <span>{prize.name}</span>
+        <span>{prize.bonus}</span>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(
+ <Prize/>,
+  document.getElementById('example')
+);
+</script>
+
+</html>

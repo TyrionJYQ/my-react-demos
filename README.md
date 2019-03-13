@@ -236,7 +236,7 @@ ReactDOM.render(
 
 >与Vue不同的是，在vue中，数据是双向绑定的，数据驱动视图，用户操作也会导致vue中相关数据发生变化，比如表单相关元素中使用v-model进行绑定。
 >
->但在React中，使用表单元素你需要使用onChange()事件对用户输入进行处理，如果表单元素没有绑定onChange事件，会报错
+>但在React中，使用表单元素你需要使用onChange()事件对用户输入进行处理，如果表单元素没有绑定onChange事件，会报如下错误。
 
 ```
 react-dom.development.js:526 Warning: Failed prop type: You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
@@ -246,3 +246,55 @@ react-dom.development.js:526 Warning: Failed prop type: You provided a `value` p
 ```
 
 如过把上面注释的return语句放开，就会发现无论用户如何如入页面表单上的值都不会发生变化。
+
+
+
+##### demo10: Component Lifecycle
+
+这是一个简单使用react组件生命周期的示例。在Clock组件的componentDidMount阶段使用this.setState改变state中time值，触发视图重新渲染,在componentWillUnmount即将卸载阶段清除定时器。
+
+
+
+##### demo11: ajax
+
+在React组件中如何获取从服务器或第三方API上的数据。在组件的componentDidMount阶段使用ajax获取数据，当获取到响应数据后，使用this.setState触发视图重新更新。
+
+```javascript
+let Component = React.Component;
+class Prize  extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      prize: {}
+    }
+  }
+  getPrize() {
+    // 模拟ajax请求
+    setTimeout(() => 
+      this.setState({
+        prize: {'name':'一等奖', 'bonus': '$10000000000'}
+      }),
+      2000
+    )
+  }
+  componentDidMount() {
+   this.getPrize()
+  }
+  render() {
+    let prize = this.state.prize;
+    return (
+      <div>
+        <span>中奖情况:</span>
+        <span>{prize.name}</span>
+        <span>{prize.bonus}</span>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(
+ <Prize/>,
+  document.getElementById('example')
+);
+```
+
