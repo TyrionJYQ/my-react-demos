@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"></script>
+  <script src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"></script>
+  <script src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"></script>
+  <script src="https://cdn.bootcss.com/prop-types/15.6.1/prop-types.js"></script>
+</head>
+
+<body>
+  <div id="root">
+
+
+  </div>
+
+</body>
+<script type="text/babel">
+// let flag = false;
+class UserGreeting extends React.Component {
+  render() {
+     return <h1>Welcome back!</h1>;
+  }
+}
+
+class GuestGreeting extends React.Component {
+  render() {
+     return <h1>Please sign up.</h1>;
+  }
+}
+
+class Greeting extends React.Component {
+  render() {
+    const isLoggedIn = this.props.isLoggedIn;
+    if (isLoggedIn) return <UserGreeting />;
+    return <GuestGreeting />;
+  }
+}
+
+class LoginButton extends React.Component {
+  render() {
+    return <button onClick={this.props.onClick}>Login</button>
+  }
+}
+
+class LogoutButton extends React.Component {
+  render() {
+    return <button onClick={this.props.onClick}>Logout</button>
+  }
+}
+
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false
+    }
+  }
+  handleLoginClick() {
+    this.setState({isLoggedIn: true})
+  }
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false})
+  }
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    { button = isLoggedIn ? 
+      <LogoutButton onClick={() => this.handleLogoutClick()} />
+      : <LoginButton onClick={() => this.handleLoginClick()} />;
+    }
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(
+  <LoginControl />,
+  document.getElementById('root')
+);
+</script>
+
+</html>

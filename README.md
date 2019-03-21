@@ -298,3 +298,156 @@ ReactDOM.render(
 );
 ```
 
+##### demo12: handling events
+
+in react events, this is important, these are three ways for you to make this to point at ReactComponent you created.
+
+```javascript
+let {Component} = React;
+class Toggle extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {isToggleOn: true};
+    // use bind
+    this.handleClick = this.handleClick.bind(this);
+  }
+  handleClick() {
+    console.log('this is', this);
+    this.setState(state => ({
+      isToggleOn: !state.isToggleOn
+    }));
+  }
+  render() {
+  
+    return (
+      <button onClick={this.handleClick}>
+           {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
+    )
+  }
+}
+```
+
+```javascript
+let {Component} = React;
+class Toggle extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {isToggleOn: true};
+    
+  }
+  // use arrowFunction in Class inner
+  handleClick = () => {
+    console.log('this is', this);
+    this.setState(state => ({
+      isToggleOn: !state.isToggleOn
+    }));
+  }
+  render() {
+  
+    return (
+      <button onClick={this.handleClick}>
+           {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
+    )
+  }
+}
+```
+
+```javascript
+let {Component} = React;
+class Toggle extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {isToggleOn: true};
+  }
+  handleClick() {
+    console.log('this is', this);
+    this.setState(state => ({
+      isToggleOn: !state.isToggleOn
+    }));
+  }
+  render() {
+  	// use arrowFunction in JSX
+    return (
+      <button onClick={() => this.handleClick()}>
+           {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
+    )
+  }
+}
+```
+
+
+
+##### demo13 Conditional Rendering
+
+```javascript
+class UserGreeting extends React.Component {
+  render() {
+     return <h1>Welcome back!</h1>;
+  }
+}
+
+class GuestGreeting extends React.Component {
+  render() {
+     return <h1>Please sign up.</h1>;
+  }
+}
+
+class Greeting extends React.Component {
+  render() {
+    const isLoggedIn = this.props.isLoggedIn;
+    if (isLoggedIn) return <UserGreeting />;
+    return <GuestGreeting />;
+  }
+}
+
+class LoginButton extends React.Component {
+  render() {
+    return <button onClick={this.props.onClick}>Login</button>
+  }
+}
+
+class LogoutButton extends React.Component {
+  render() {
+    return <button onClick={this.props.onClick}>Logout</button>
+  }
+}
+
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false
+    }
+  }
+  handleLoginClick() {
+    this.setState({isLoggedIn: true})
+  }
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false})
+  }
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+    { button = isLoggedIn ? 
+      <LogoutButton onClick={() => this.handleLogoutClick()} />
+      : <LoginButton onClick={() => this.handleLoginClick()} />;
+    }
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(
+  <LoginControl />,
+  document.getElementById('root')
+);
+```
+
+在react中，条件渲染和JS中一样使用if或者其他条件操作符，在demo13中，定义了多个组件，其中Greeting组件根据接收的props值来返回UserGreeting或者GuestGreeting。而LoginControl组件根据state中的状态返回登录或者登出按钮。在LoginControl组件中，我们使用了变量button来保存登录或者登出按钮组件。当点击按钮时，会调用setState方法重新设置isLoggedIn的值，从而触发LoginControl的render方法重新渲染组件，此时Greeting组件接受的props值也会发生相应变化。最终Greeting根据props中的isLoggedIn的值返回UserGreeting或者GuestGreeting。
